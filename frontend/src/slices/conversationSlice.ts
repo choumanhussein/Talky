@@ -26,37 +26,37 @@ const initialState: ConversationState = {
     },
     {
       id: 2,
-      question: "What is the main source of your current feelings?",
+      question: "What's making you feel this way?",
       answer: "",
       feeling_predict: []
     },
     {
       id: 3,
-      question: "In your main source of feelings, do you often feel stressed or overwhelmed?",
+      question: "When you think about why you feel this way, do you often feel stressed or overwhelmed?",
       answer: "",
       feeling_predict: []
     },
     {
       id: 4,
-      question: "What is your main coping mechanism when you feel stressed or overwhelmed?",
+      question: "What do you usually do to feel better when you're stressed or overwhelmed?",
       answer: "",
       feeling_predict: []
     },
     {
       id: 5,
-      question: "How much support do you feel you receive from the people closest to you?",
+      question: "Do you feel supported by the people closest to you?",
       answer: "",
       feeling_predict: []
     },
     {
       id: 6,
-      question: "How would you rate your self-esteem within the context of your main stress source?",
+      question: "How confident do you feel when dealing with your biggest source of stress?",
       answer: "",
       feeling_predict: []
     },
     {
       id: 7,
-      question: "Considering all aspects of your life, how satisfied are you currently?",
+      question: "Overall, how happy are you with your life right now?",
       answer: "",
       feeling_predict: []
     }

@@ -86,19 +86,20 @@ function Questionary() {
 
   useEffect(() => {
     if (Object.keys(dominate_feeling).length !== 0) {
-
-    axios.post('http://localhost:8000/get-dominate-feeling', {
-      params: {
-        // userInput,
-        dominate_feeling,
-      },
-    })
-    .then
-    (response => {console.log(response.data)})
-    .catch
-    (error => {console.error("error:", error)})
+      axios
+        .post('http://localhost:8000/get-dominate-feeling', {
+          dominate_feeling: dominate_feeling,
+          
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error("error:", error);
+        });
     }
   }, [dominate_feeling]);
+  
   
   return (
     <div

@@ -1,20 +1,15 @@
 import sys
 import openai
 from decouple import config
-# from main import dominate_feeling
-
-
-#Import Custom Functions
-
+# Import Custom Functions
 from functions.database import get_recent_messages
 
-#Retrieve
+# Retrieve
 openai.organization = config("OPEN_AI_ORG")
 openai.api_key = config("OPEN_AI_KEY")
 
-#Open AI - Whisper
-#Convert Audio To Text
-
+# Open AI - Whisper
+# Convert Audio To Text
 def convert_audio_to_text(audio_file):
     try:
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
@@ -23,10 +18,10 @@ def convert_audio_to_text(audio_file):
     except Exception as e:
         print(e)
         return
-    
+
 # Open AI - ChatGPT
 # Get Response to our Message
-def get_chat_response(message_input):
+def get_chat_response(message_input, dominate_feeling):
     messages = get_recent_messages(dominate_feeling=dominate_feeling)
     user_message = {"role": "user", "content": message_input}
     messages.append(user_message)

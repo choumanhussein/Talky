@@ -2,10 +2,18 @@ import { useState } from "react";
 import Title from "./Title";
 import RecordMessage from "./RecordMessage";
 import axios from "axios";
+import { useSelector} from 'react-redux';
+import { RootState } from "../store";
+
+interface Message {
+  sender: string;
+  blobUrl: string;
+}
 
 function Controller() {
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const dominate_feeling = useSelector((state: RootState) => state.conversation.dominate_feeling)
 
   const createBlobUrl = (data: any) => {
     const blob = new Blob([data], { type: "audio/mpeg" });
@@ -24,12 +32,14 @@ function Controller() {
         // Construct Audio To Send file
         const formData = new FormData();
         formData.append("file", blob, "myFile.wav");
+        formData.append("dominate_feeling", dominate_feeling)
 
         // Send form data to API endpoint
         try {
           const res = await axios.post("http://localhost:8000/post-audio", formData, {
-            headers: { "Content-Type": "audio/mpeg" },
+            headers: { "Content-Type": "multipart/form-data" },
             responseType: "arraybuffer",
+
           });
 
           const responseBlob = res.data;
@@ -45,9 +55,14 @@ function Controller() {
           setIsLoading(false);
           audio.play();
         } catch (err: any) {
-          console.error(err.message);
-          setIsLoading(false);
+          console.error("Error:", err); // Log the error object itself
+          console.error("Error Message:", err.message); // Log the error message
+          console.error("Stack Trace:", err.stack);
         }
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
       });
   };
 
@@ -77,16 +92,16 @@ function Controller() {
             );
           })}
         </div>
-          {messages.length == 0 && !isLoading && (
-            <div className="text-center font-light italic mt-10">
-              Send Talky a message...
-            </div>
-          )}
-          {isLoading &&(
-            <div className="text-center font-light italic mt-10 animate-pulse">
-              Talkyy is recording...
-            </div>
-          )}
+        {messages.length === 0 && !isLoading && (
+          <div className="text-center font-light italic mt-10">
+            Send Talky a message...
+          </div>
+        )}
+        {isLoading && (
+          <div className="text-center font-light italic mt-10 animate-pulse">
+            Talkyy is recording...
+          </div>
+        )}
         {/* Recorder */}
         <div className="fixed bottom-0 w-full py-6 border-t text-center bg-gradient-to-r from-sky-500 to-green-500">
           <div className="flex justify-center items-center w-full">
