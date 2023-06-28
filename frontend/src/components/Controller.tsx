@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Title from "./Title";
 import RecordMessage from "./RecordMessage";
 import axios from "axios";
@@ -65,7 +65,28 @@ function Controller() {
         setIsLoading(false);
       });
   };
+  useEffect(() => {
+    if (dominate_feeling.length > 0) {
+      const formData = new FormData()
+      formData.append("dominate_feeling", dominate_feeling[2])
+      axios
+        .post('http://localhost:8000/introduction-message', dominate_feeling[2])
+        .then(response => {
+          console.log(response.data);
+          const responseBlob = response.data;
+          const audio = new Audio();
+          audio.src = createBlobUrl(responseBlob);
 
+          // Append to audio
+          const TalkyyMessage = { sender: "Talky", blobUrl: audio.src };
+          const updatedMessagesArr = messages.concat(TalkyyMessage);
+          setMessages(updatedMessagesArr);
+        })
+        .catch(error => {
+          console.error("error:", error);
+        });
+    }
+  }, []);
   return (
     <div className="h-screen overflow-y-hidden">
       <Title setMessages={setMessages} />
@@ -76,7 +97,7 @@ function Controller() {
             return (
               <div
                 key={index + audio.sender}
-                className={`flex flex-col ${audio.sender === "me" ? "items-start" : "items-end"}`}
+                className={`flex flex-col ${audio.sender === "me" ? "items-end" : "items-start"}`}
               >
                 {/* Sender */}
                 <div className="mt-4">

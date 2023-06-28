@@ -75,10 +75,32 @@ async def classify_emotion(text: str):
                 label = res['label']
                 score = res['score']
                 result = f"label: {label}, score: {score}\n"
-                # print(result)
+                print(result)
         return results
     except Exception as e:
         raise HTTPException(status_code=500, detail="Unable to classify emotion")
+
+
+@app.post("/introduction-message")
+async def introduction_message(dominate_feeling: str = Body(...)):
+    print(dominate_feeling)
+    message_decoded = dominate_feeling
+    if not message_decoded:
+        return HTTPException(status_code=400, detail="failed to decode audio")
+    chat_response = get_chat_response(message_decoded, dominate_feeling)
+    if not chat_response:
+        return HTTPException(status_code=400, detail="failed to get chat response")
+    store_messages(message_decoded, chat_response, dominate_feeling)
+    audio_output = convert_text_to_speech(chat_response)
+    if not audio_output:
+        return HTTPException(status_code=400, detail="failed to get Eleven Labs audio response")
+
+    def iterfile():
+        yield audio_output
+    
+    return StreamingResponse(iterfile(), media_type="application/octet-stream")
+
+
 
 
 @app.post("/post-audio/")

@@ -56,7 +56,7 @@ function Questionary() {
         dispatch(addAnswer(answer_payload));
         dispatch(savePrediction(payload));
         
-        if (currentQuestion !== 6) {
+        if (currentQuestion !== 1) {
           setcurrentQuestion(currentQuestion + 1);
         } else {
           alert("We are connecting you to Talkyy, your virtual psychologist !!");
@@ -84,21 +84,20 @@ function Questionary() {
   }, [messages]);
  
 
-  useEffect(() => {
-    if (Object.keys(dominate_feeling).length !== 0) {
-      axios
-        .post('http://localhost:8000/get-dominate-feeling', {
-          dominate_feeling: dominate_feeling,
-          
-        })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error("error:", error);
-        });
-    }
-  }, [dominate_feeling]);
+  // useEffect(() => {
+  //   if (dominate_feeling.length > 0) {
+  //     const formData = new FormData()
+  //     formData.append("dominate_feeling", dominate_feeling[2])
+  //     axios
+  //       .post('http://localhost:8000/introduction-message', dominate_feeling[2])
+  //       .then(response => {
+  //         console.log(response.data);
+  //       })
+  //       .catch(error => {
+  //         console.error("error:", error);
+  //       });
+  //   }
+  // }, [dominate_feeling]);
   
   
   return (

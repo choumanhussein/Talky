@@ -30,36 +30,36 @@ const initialState: ConversationState = {
       answer: "",
       feeling_predict: []
     },
-    {
-      id: 3,
-      question: "When you think about why you feel this way, do you often feel stressed or overwhelmed?",
-      answer: "",
-      feeling_predict: []
-    },
-    {
-      id: 4,
-      question: "What do you usually do to feel better when you're stressed or overwhelmed?",
-      answer: "",
-      feeling_predict: []
-    },
-    {
-      id: 5,
-      question: "Do you feel supported by the people closest to you?",
-      answer: "",
-      feeling_predict: []
-    },
-    {
-      id: 6,
-      question: "How confident do you feel when dealing with your biggest source of stress?",
-      answer: "",
-      feeling_predict: []
-    },
-    {
-      id: 7,
-      question: "Overall, how happy are you with your life right now?",
-      answer: "",
-      feeling_predict: []
-    }
+    // {
+    //   id: 3,
+    //   question: "When you think about why you feel this way, do you often feel stressed or overwhelmed?",
+    //   answer: "",
+    //   feeling_predict: []
+    // },
+    // {
+    //   id: 4,
+    //   question: "What do you usually do to feel better when you're stressed or overwhelmed?",
+    //   answer: "",
+    //   feeling_predict: []
+    // },
+    // {
+    //   id: 5,
+    //   question: "Do you feel supported by the people closest to you?",
+    //   answer: "",
+    //   feeling_predict: []
+    // },
+    // {
+    //   id: 6,
+    //   question: "How confident do you feel when dealing with your biggest source of stress?",
+    //   answer: "",
+    //   feeling_predict: []
+    // },
+    // {
+    //   id: 7,
+    //   question: "Overall, how happy are you with your life right now?",
+    //   answer: "",
+    //   feeling_predict: []
+    // }
 
   ],
   dominate_feeling: []
@@ -129,7 +129,10 @@ export const conversationSlice = createSlice({
       const maxKeys = dataArray.slice(0, 2).map(([key, value]) => key);
       
       // console.log(maxKeys);
-      state.dominate_feeling = maxKeys
+      state.dominate_feeling = [... maxKeys, `${maxKeys[0]}, and ${maxKeys[1]} are the user's state !`]
+
+
+    
   
 
     }
@@ -139,4 +142,3 @@ export const conversationSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { addAnswer, savePrediction, predictDominateFeeling } = conversationSlice.actions;
 export default conversationSlice.reducer;
-

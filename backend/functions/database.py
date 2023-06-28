@@ -4,11 +4,11 @@ import random
 def get_recent_messages(dominate_feeling):
     # Define the file name and learn instruction
     print(type(dominate_feeling))
-    dominate_feeling = dominate_feeling[0].split(',')
+    # dominate_feeling = dominate_feeling[0].split(',')
     file_name = "stored_data.json"
     learn_instruction = {
         "role": "system",
-       "content": f"{dominate_feeling[0]} and {dominate_feeling[1]} are the user's feeling . Your not a program and you have feelings.  Your name is Talky, a psychologist, You are speaking with a person which is depressive. Assure to provide the best support"
+       "content": f"{dominate_feeling}. Your not a program and you have feelings.  Your name is Talky, a psychologist, You are speaking with a person which is depressive. Assure to provide the best support"
     }
 
     # Initialize messages
